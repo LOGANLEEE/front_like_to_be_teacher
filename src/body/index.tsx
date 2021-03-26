@@ -1,5 +1,21 @@
 import React, { FunctionComponent } from 'react';
+import { Wrapper } from './Wrapper';
 
-export const Body: FunctionComponent = ({}) => {
-	return <div> 1234s </div>;
+import { Board } from 'Components/Board';
+
+interface Props {}
+
+export const Body: FunctionComponent<Props> = ({}) => {
+	return (
+		<Wrapper>
+			<div className='board-block1'>
+				<Board className='item' />
+				<Board className='item' />
+			</div>
+			<div className='board-block2'>
+				<Board className='item' />
+				<Board className='item' />
+			</div>
+		</Wrapper>
+	);
 };
