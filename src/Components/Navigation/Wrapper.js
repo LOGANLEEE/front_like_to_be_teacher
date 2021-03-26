@@ -7,8 +7,9 @@ export const Wrapper = styled.div`
 	height: 100%;
 
 	.item {
-		font-size: 1vmax;
+		font-size: 1vw;
 		font-weight: bold;
+		/* overflow: auto; */
 		margin: 0% 1% 0% 1%;
 		cursor: pointer;
 		text-align: center;

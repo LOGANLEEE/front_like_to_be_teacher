@@ -1,17 +1,17 @@
-import { Button } from '@material-ui/core';
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { Wrapper } from './Wrapper';
 
-export const Navigation = () => {
+import { Button } from '@material-ui/core';
+
+interface Props {}
+
+export const Navigation: FunctionComponent = ({}: Props) => {
 	return (
 		<Wrapper>
 			<Button className='item' variant='contained' color='primary'>
-				Honored Academy
+				Academy
 			</Button>
-			<Button className='item' variant='contained' color='secondary'>
-				Dishonored Academy
-			</Button>
-			<Button className='item' variant='contained' color='default'>
+			<Button size='large' className='item' variant='contained' color='secondary'>
 				News
 			</Button>
 			<Button className='item' variant='contained' color='default'>
