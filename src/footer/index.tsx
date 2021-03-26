@@ -1,5 +1,13 @@
 import React, { FunctionComponent } from 'react';
+import { Wrapper } from './Wrapper';
 
-export const Footer: FunctionComponent = ({}) => {
-	return <div> 1234s </div>;
+interface Props {}
+
+export const Footer: FunctionComponent<Props> = ({}) => {
+	return (
+		<Wrapper>
+			<div>Copyright (c) example.com All Right Reserved.</div>
+			<div>Contact us, logan_lee@kakao.com</div>
+		</Wrapper>
+	);
 };
