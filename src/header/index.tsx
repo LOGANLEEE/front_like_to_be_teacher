@@ -2,7 +2,7 @@ import React from 'react';
 import { Wrapper } from './Wrapper';
 import { Navigation } from 'Components/Navigation';
 import { Login } from 'Components/Login';
-import { DarkMode } from 'Components/DarkMode';
+import { ThemeToggle } from 'Components/ThemeToggle';
 
 export const Header = ({}) => {
 	return (
@@ -13,7 +13,7 @@ export const Header = ({}) => {
 			<div className='header-block2'>
 				<div className='header-block3'>
 					<Login />
-					<DarkMode />
+					<ThemeToggle />
 				</div>
 				<div className='header-block4'>user info after logging in</div>
 			</div>
