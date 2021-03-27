@@ -3,15 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './app';
 import reportWebVitals from './reportWebVitals';
-import { RecoilRoot } from 'recoil';
-import RecoilizeDebugger from 'recoilize';
 
 ReactDOM.render(
 	<React.StrictMode>
-		<RecoilRoot>
-			<RecoilizeDebugger />
-			<App />
-		</RecoilRoot>
+		<App />
 	</React.StrictMode>,
 	document.getElementById('root'),
 );
