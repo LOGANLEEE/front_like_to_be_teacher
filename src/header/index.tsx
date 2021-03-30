@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { Wrapper } from './Wrapper';
 import { Navigation } from 'Components/Navigation';
 import { Login } from 'Components/Login';
 import { ThemeToggle } from 'Components/ThemeToggle';
 
-export const Header = ({}) => {
+interface Props {}
+
+export const Header: FunctionComponent<Props> = () => {
 	return (
 		<Wrapper>
 			<div className='header-block1'>
@@ -12,8 +14,8 @@ export const Header = ({}) => {
 			</div>
 			<div className='header-block2'>
 				<div className='header-block3'>
-					<Login />
-					<ThemeToggle />
+					<Login className='header-block3-item1' />
+					<ThemeToggle className='header-block3-item2' />
 				</div>
 				<div className='header-block4'>user info after logging in</div>
 			</div>
