@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { useRecoilValue } from 'recoil';
 
