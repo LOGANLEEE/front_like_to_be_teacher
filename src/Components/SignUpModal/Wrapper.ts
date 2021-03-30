@@ -24,6 +24,9 @@ export const ModalBodyWrapper = styled(animated.div)`
 	outline: none;
 	overflow-y: scroll;
 
+	form {
+		display: contents;
+	}
 	.item1 {
 		display: flex;
 		flex-direction: row;

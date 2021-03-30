@@ -1,4 +1,4 @@
-import React, { useState, FunctionComponent, useCallback } from 'react';
+import React, { useRef, useState, FunctionComponent, useCallback, FormEventHandler } from 'react';
 
 import { useSpring } from 'react-spring';
 import TextField from '@material-ui/core/TextField';
@@ -17,43 +17,30 @@ export const SignUpModal: FunctionComponent<Props> = ({ should_open, set_should_
 		to: { opacity: should_open ? 1 : 0 },
 	});
 
-	const [form_info, set_form_info] = useState({
-		first_name: '',
-		last_name: '',
-		id: '',
-		password: '',
-		email: '',
-		country_code: '',
-	});
-	const [form_error, set_form_error] = useState({
-		first_name_error: false,
-		last_name_error: false,
-		id_error: false,
-		password_error: false,
-		email_error: false,
-		country_code_error: false,
-	});
+	const [first_name, set_first_name] = useState('');
+	const [last_name, set_last_name] = useState('');
+	const [id, set_id] = useState('');
+	const [password, set_password] = useState('');
+	const [email, set_email] = useState('');
+	const [country_code, set_country_code] = useState('');
 
 	// ISO 3166-1 alpha-2
 	// ⚠️ No support for IE 11
-
 	const countryToFlag = useCallback((isoCode: string) => {
 		return typeof String.fromCodePoint !== 'undefined'
 			? isoCode.toUpperCase().replace(/./g, (char) => String.fromCodePoint(char.charCodeAt(0) + 127397))
 			: isoCode;
 	}, []);
+	// FormEventHandler<HTMLButtonElement>
+	const validation = useCallback((e) => {
+		e.preventDefault();
+		const formData: any = new FormData(e.target);
 
-	const validate = useCallback(() => {}, []);
+		for (var [key, value] of formData.entries()) {
+			console.log(key, value);
+		}
+	}, []);
 
-	const { first_name } = form_info;
-	const {
-		country_code_error: country_error,
-		email_error,
-		first_name_error,
-		id_error,
-		last_name_error,
-		password_error,
-	} = form_error;
 	return (
 		<Wrapper style={spring_info}>
 			<StyledModal
@@ -63,110 +50,93 @@ export const SignUpModal: FunctionComponent<Props> = ({ should_open, set_should_
 				aria-labelledby='simple-modal-title'
 				aria-describedby='simple-modal-description'>
 				<ModalBodyWrapper style={spring_info}>
-					<div className='item1'>
-						<TextField
-							onChange={({ target: { value } }) => {
-								if (value.length > 1) {
-									set_form_info({ ...form_info, first_name: value });
-									set_form_error({ ...form_error, first_name_error: false });
-								} else {
-									set_form_error({ ...form_error, first_name_error: true });
-								}
-							}}
-							label='First Name'
-							error={first_name_error}
-							required
-						/>
-						<TextField
-							onChange={({ target: { value } }) => {
-								if (value.length > 1) {
-									set_form_info({ ...form_info, last_name: value });
-									set_form_error({ ...form_error, last_name_error: false });
-								} else {
-									set_form_error({ ...form_error, last_name_error: true });
-								}
-							}}
-							label='Last Name'
-							error={last_name_error}
-							required
-						/>
-					</div>
-					<br />
-					<TextField
-						label='ID'
-						required
-						error={id_error}
-						onChange={({ target: { value } }) => {
-							if (value.length > 1) {
-								set_form_info({ ...form_info, id: value });
-								set_form_error({ ...form_error, id_error: false });
-							} else {
-								set_form_error({ ...form_error, id_error: true });
-							}
-						}}
-					/>
-					<br />
-					<TextField
-						label='Password (6 character or more)'
-						type='password'
-						autoComplete='current-password'
-						error={password_error}
-						onChange={({ target: { value } }) => {
-							if (value.length > 5) {
-								set_form_info({ ...form_info, password: value });
-								set_form_error({ ...form_error, password_error: false });
-							} else {
-								set_form_error({ ...form_error, password_error: true });
-							}
-						}}
-						required
-					/>
-					<br />
-					<br />
-					<TextField
-						label='E-Mail'
-						required
-						error={email_error}
-						onChange={({ target: { value } }) => {
-							if (value.length > 5) {
-								set_form_info({ ...form_info, email: value });
-								set_form_error({ ...form_error, email_error: false });
-							} else {
-								set_form_error({ ...form_error, email_error: true });
-							}
-						}}
-					/>
-					<br />
-					<br />
-					<Autocomplete
-						options={countries as CountryType[]}
-						autoHighlight
-						onChange={(e: any, { code }: any) => {
-							set_form_info({ ...form_info, country_code: code });
-						}}
-						getOptionLabel={(option) => option.label}
-						renderOption={(option) => (
-							<>
-								<span>{countryToFlag(option.code)}</span>
-								{option.label} ({option.code}) +{option.phone}
-							</>
-						)}
-						renderInput={(params) => (
+					<form onSubmit={validation}>
+						<div className='item1'>
 							<TextField
-								{...params}
-								label='Choose a country'
+								onChange={({ target: { value } }) => set_first_name(value)}
+								label='First Name'
+								name='First Name'
+								type='text'
+								id='First Name'
+								error={first_name === ''}
+								autoFocus
 								required
-								error={country_error}
-								inputProps={{
-									...params.inputProps,
-									autoComplete: 'new-password', // disable autocomplete and autofill
-								}}
 							/>
-						)}
-					/>
-					<br />
-					<br />
-					<StyledButton onClick={() => validate()}>SIGN UP</StyledButton>
+							<TextField
+								onChange={({ target: { value } }) => set_last_name(value)}
+								label='Last Name'
+								name='Last Name'
+								id='Last Name'
+								type='text'
+								error={last_name === ''}
+								required
+							/>
+						</div>
+						<br />
+						<TextField
+							label='ID'
+							name='ID'
+							id='ID'
+							type='text'
+							required
+							error={id === ''}
+							onChange={({ target: { value } }) => set_id(value)}
+						/>
+						<br />
+						<TextField
+							label='Password (6 character or more)'
+							type='password'
+							id='password'
+							name='password'
+							autoComplete='current-password'
+							error={password === ''}
+							onChange={({ target: { value } }) => set_password(value)}
+							required
+						/>
+						<br />
+						<br />
+						<TextField
+							label='E-Mail'
+							required
+							type='email'
+							id='E-Mail'
+							name='E-Mail'
+							error={email === ''}
+							onChange={({ target: { value } }) => set_email(value)}
+						/>
+						<br />
+						<br />
+						<Autocomplete
+							options={countries as CountryType[]}
+							autoHighlight
+							onChange={(e: any, { code }: any) => set_country_code(code)}
+							getOptionLabel={(option) => option.label}
+							renderOption={(option) => (
+								<>
+									<span>{countryToFlag(option.code)}</span>
+									{option.label} ({option.code}) +{option.phone}
+								</>
+							)}
+							renderInput={(params) => (
+								<TextField
+									{...params}
+									label='Choose a country'
+									id='coutnry'
+									name='coutnry'
+									required
+									error={country_code === ''}
+									// error={country_error}
+									inputProps={{
+										...params.inputProps,
+										autoComplete: 'new-password', // disable autocomplete and autofill
+									}}
+								/>
+							)}
+						/>
+						<br />
+						<br />
+						<StyledButton type='submit'>SIGN UP</StyledButton>
+					</form>
 
 					<br />
 					<br />
