@@ -1,16 +1,24 @@
-import React, { useState } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import DarkModeToggle from 'react-dark-mode-toggle';
 import { useRecoilState } from 'recoil';
-import { isDarkTheme } from 'globalState';
+import { theme_info_state } from 'globalState';
 
 import { Wrapper } from './Wrapper';
 
-export const ThemeToggle = () => {
-	const [darkTheme, setIsDarkTheme] = useRecoilState(isDarkTheme);
+interface Props {
+	className?: string;
+}
+export const ThemeToggle: FunctionComponent<Props> = (props) => {
+	const [theme_info, set_theme_info] = useRecoilState(theme_info_state);
 
 	return (
-		<Wrapper>
-			<DarkModeToggle onChange={() => setIsDarkTheme(!darkTheme)} checked={darkTheme} size={60} speed={4} />
+		<Wrapper {...props}>
+			<DarkModeToggle
+				onChange={() => set_theme_info({ ...theme_info, is_dark: !theme_info.is_dark })}
+				checked={theme_info.is_dark}
+				size={60}
+				speed={4}
+			/>
 		</Wrapper>
 	);
 };
