@@ -10,20 +10,27 @@ export const StyledButton = styled(Button)`
 `;
 
 export const ModalBodyWrapper = styled(animated.div)`
-	transform: translate(-50%, -50%);
-	text-align: center;
-	width: 30%;
-	height: 70%;
-	overflow-y: scroll;
-	padding: 2%;
-	background-color: ${({ theme: { is_dark, dark_back_ground, white_back_ground } }) =>
-		is_dark ? dark_back_ground : white_back_ground};
-	border: 1px solid silver;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	outline: none;
-`;
+			transform: translate(-50%, -50%);
+			text-align: center;
+			width: 30%;
+			height: 70%;
+			overflow-y: scroll;
+			padding: 2%;
+			background-color: ${({ theme: { is_dark, dark_back_ground, white_back_ground } }) =>
+				is_dark ? dark_back_ground : white_back_ground};
+			border: 1px solid silver;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			outline: none;
+
+			form {
+				display: contents;
+			}
+			.find_password {
+				cursor: pointer;
+			}
+		`;
 
 export const StyledModal = styled(Modal)`
 	top: 50% !important;
