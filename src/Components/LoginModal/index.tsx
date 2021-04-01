@@ -1,34 +1,48 @@
 import React, { useState, FunctionComponent, useCallback } from 'react';
-
 import { useSpring } from 'react-spring';
 import TextField from '@material-ui/core/TextField';
 import { SignUpModal } from 'Components/SignUpModal';
-import close_white from 'asset/close-white-18dp.svg';
-import account_circle from 'asset/account_circle-24px.svg';
 import { ModalBodyWrapper, StyledModal, Wrapper, StyledButton } from './Wrapper';
 import { axios } from 'globalFunc';
+import { useSetRecoilState } from 'recoil';
+import { user_info_state } from 'globalState';
 
 interface Props {
 	should_open: boolean;
 	set_should_open: Function;
 }
+
 export const LoginModal: FunctionComponent<Props> = ({ should_open, set_should_open }) => {
 	const spring_info = useSpring({
 		opacity: 1,
 		to: { opacity: should_open ? 1 : 0 },
 	});
 
-	const [should_open_sign_modal, set_should_open_sign_modal] = useState(true);
+	const [should_open_sign_modal, set_should_open_sign_modal] = useState(false);
 	const [password_err, set_password_err] = useState(false);
+	const set_user_info = useSetRecoilState(user_info_state);
 
 	const doLogin = useCallback((e) => {
 		e.preventDefault();
 		const formData: FormData = new FormData(e.target);
+		// todo name validation, phone number auto insert - and validation
 		if ((formData.get('password') as string).length < 5) set_password_err(true);
 		else set_password_err(false);
 
-		axios.post('/auth/login', Object.fromEntries(formData));
+		axios
+			.post('/auth/login', Object.fromEntries(formData))
+			.then(({ data }) => {
+				if (!data?.reason) {
+					set_user_info(data);
+					set_should_open(false);
+				}
+				alert(data?.reason);
+			})
+			.catch(() => {
+				// todo receive error meesage
+			});
 	}, []);
+
 	return (
 		<Wrapper style={spring_info}>
 			<StyledModal
@@ -42,7 +56,7 @@ export const LoginModal: FunctionComponent<Props> = ({ should_open, set_should_o
 						<TextField label='ID' name='id' type='text' required />
 						<br />
 						<TextField
-							label='Password'
+							label='Password (6 character or more)'
 							name='password'
 							type='password'
 							helperText={password_err ? 'more than 6 digit' : null}
