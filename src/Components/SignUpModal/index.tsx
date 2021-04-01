@@ -39,6 +39,8 @@ export const SignUpModal: FunctionComponent<Props> = ({ should_open, set_should_
 		set_password_err(false);
 
 		axios.post('/auth/signup', Object.fromEntries(formData));
+
+		//todo alert about result. then alert it.
 	}, []);
 
 	return (
@@ -52,30 +54,11 @@ export const SignUpModal: FunctionComponent<Props> = ({ should_open, set_should_
 				<ModalBodyWrapper style={spring_info}>
 					<form onSubmit={validation}>
 						<div className='item1'>
-							<TextField
-								// onChange={({ target: { value } }) => set_first_name(value)}
-								label='First Name'
-								name='first_name'
-								type='text'
-								autoFocus
-								required
-							/>
-							<TextField
-								// onChange={({ target: { value } }) => set_last_name(value)}
-								label='Last Name'
-								name='last_name'
-								type='text'
-								required
-							/>
+							<TextField label='First Name' name='first_name' type='text' autoFocus required />
+							<TextField label='Last Name' name='last_name' type='text' required />
 						</div>
 						<br />
-						<TextField
-							label='ID'
-							name='id'
-							type='text'
-							required
-							// onChange={({ target: { value } }) => set_id(value)}
-						/>
+						<TextField label='ID' name='id' type='text' required />
 						<br />
 						<TextField
 							label='Password (6 character or more)'
@@ -83,24 +66,17 @@ export const SignUpModal: FunctionComponent<Props> = ({ should_open, set_should_
 							name='password'
 							error={password_err}
 							autoComplete='current-password'
-							// onChange={({ target: { value } }) => set_password(value)}
 							required
 						/>
 						<br />
 						<br />
-						<TextField
-							label='E-Mail'
-							required
-							type='email'
-							name='email'
-							// onChange={({ target: { value } }) => set_email(value)}
-						/>
+						<TextField label='E-Mail' required type='email' name='email' />
 						<br />
+						<TextField label='Mobile' required type='text' name='mobile' />
 						<br />
 						<Autocomplete
 							options={countries as CountryType[]}
 							autoHighlight
-							// onChange={(e: any, { code }: any) => set_country_code(code)}
 							getOptionLabel={(option) => option.label}
 							renderOption={(option) => (
 								<>
@@ -112,9 +88,8 @@ export const SignUpModal: FunctionComponent<Props> = ({ should_open, set_should_
 								<TextField
 									{...params}
 									label='Choose a country'
-									name='coutnry'
+									name='country'
 									required
-									// error={country_error}
 									inputProps={{
 										...params.inputProps,
 										autoComplete: 'new-password', // disable autocomplete and autofill
