@@ -1,47 +1,26 @@
-import React, { useRef, useState, FunctionComponent, useCallback, FormEventHandler } from 'react';
+import React, { useState, FunctionComponent, useCallback } from 'react';
 
-import { useSpring } from 'react-spring';
 import TextField from '@material-ui/core/TextField';
 import { ModalBodyWrapper, StyledModal, Wrapper, StyledButton } from './Wrapper';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { CountryType, countries } from 'country';
-import { axios } from 'globalFunc';
+import { useHooks } from './useHooks';
 
-interface Props {
+export interface Props {
 	should_open: boolean;
 	set_should_open: Function;
 }
 
 export const SignUpModal: FunctionComponent<Props> = ({ should_open, set_should_open }) => {
-	const spring_info = useSpring({
-		opacity: 1,
-		to: { opacity: should_open ? 1 : 0 },
-	});
-
-	const [password_err, set_password_err] = useState(false);
-
-	// ISO 3166-1 alpha-2
-	// ⚠️ No support for IE 11
-	const countryToFlag = useCallback((isoCode: string) => {
-		return typeof String.fromCodePoint !== 'undefined'
-			? isoCode.toUpperCase().replace(/./g, (char) => String.fromCodePoint(char.charCodeAt(0) + 127397))
-			: isoCode;
-	}, []);
-
-	// FormEventHandler<HTMLButtonElement>
-	const validation = useCallback((e) => {
-		e.preventDefault();
-		const formData: FormData = new FormData(e.target);
-		if ((formData.get('password') as string).length < 5) {
-			set_password_err(true);
-			return;
-		}
-		set_password_err(false);
-
-		axios.post('/auth/signup', Object.fromEntries(formData));
-
-		//todo alert about result. then alert it.
-	}, []);
+	const {
+		password_err,
+		first_name_err,
+		email_err,
+		id_err,
+		last_name_err,
+		spring_info,
+		func: { countryToFlag, validation },
+	} = useHooks({ set_should_open, should_open });
 
 	return (
 		<Wrapper style={spring_info}>
@@ -53,12 +32,29 @@ export const SignUpModal: FunctionComponent<Props> = ({ should_open, set_should_
 				aria-describedby='simple-modal-description'>
 				<ModalBodyWrapper style={spring_info}>
 					<form onSubmit={validation}>
+						<br />
+						<br />
 						<div className='item1'>
-							<TextField label='First Name' name='first_name' type='text' autoFocus required />
-							<TextField label='Last Name' name='last_name' type='text' required />
+							<TextField
+								label='First Name'
+								error={first_name_err}
+								helperText={first_name_err && 'name must be text'}
+								name='first_name'
+								type='text'
+								autoFocus
+								required
+							/>
+							<TextField
+								label='Last Name'
+								error={last_name_err}
+								name='last_name'
+								helperText={last_name_err && 'name must be text'}
+								type='text'
+								required
+							/>
 						</div>
 						<br />
-						<TextField label='ID' name='id' type='text' required />
+						<TextField label='ID' name='id' error={id_err} type='text' required />
 						<br />
 						<TextField
 							label='Password (6 character or more)'
@@ -70,9 +66,9 @@ export const SignUpModal: FunctionComponent<Props> = ({ should_open, set_should_
 						/>
 						<br />
 						<br />
-						<TextField label='E-Mail' required type='email' name='email' />
+						<TextField label='E-Mail' error={email_err} required type='email' name='email' />
 						<br />
-						<TextField label='Mobile' required type='text' name='mobile' />
+						<TextField label='Mobile' type='text' name='mobile' />
 						<br />
 						<Autocomplete
 							options={countries as CountryType[]}
