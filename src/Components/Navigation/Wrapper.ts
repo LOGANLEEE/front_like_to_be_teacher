@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Button, ButtonTypeMap, ExtendButtonBase } from '@material-ui/core';
 
 export const Wrapper = styled.div`
 	display: flex;
@@ -20,15 +19,3 @@ export const Wrapper = styled.div`
 		padding-right: 5px;
 	}
 `;
-
-export const StyledButton = styled(Button)`
-	background-color: #1e2638;
-	color: #fff;
-	&:hover {
-		background-color: #5469d4;
-	}
-`;
-
-// export const StyledButton: ExtendButtonBase<ButtonTypeMap<{}, 'button'>> = styled(Button)`
-// 	background-color: yellow;
-// `;

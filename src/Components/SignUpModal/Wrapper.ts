@@ -1,13 +1,8 @@
 import styled from 'styled-components';
 import { animated } from 'react-spring';
-import { Modal, Button } from '@material-ui/core';
+import { Modal } from '@material-ui/core';
 
 export const Wrapper = styled(animated.div)``;
-
-export const StyledButton = styled(Button)`
-	cursor: pointer;
-	background-color: #1f2738;
-`;
 
 export const ModalBodyWrapper = styled(animated.div)`
 	transform: translate(-50%, -50%);

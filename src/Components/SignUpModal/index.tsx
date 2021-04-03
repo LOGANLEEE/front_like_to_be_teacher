@@ -1,10 +1,11 @@
 import React, { useState, FunctionComponent, useCallback } from 'react';
 
 import TextField from '@material-ui/core/TextField';
-import { ModalBodyWrapper, StyledModal, Wrapper, StyledButton } from './Wrapper';
+import { ModalBodyWrapper, StyledModal, Wrapper } from './Wrapper';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { CountryType, countries } from 'country';
 import { useHooks } from './useHooks';
+import { StyledButton } from 'Components/StyledButton';
 
 export interface Props {
 	should_open: boolean;
