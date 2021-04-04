@@ -11,19 +11,26 @@ interface Props {
 	className?: string;
 }
 
+declare const window: any;
+
 export const Login: FunctionComponent<Props> = (props) => {
-	const [should_open, set_should_open] = useState(true);
+	const [should_open, set_should_open] = useState(false);
 	const { is_login } = useRecoilValue(user_info_state);
 
 	// ! logout function
 	const reset_user_info = useResetRecoilState(user_info_state);
 
+	const log_out = () => {
+		reset_user_info();
+		window.FB.logout();
+	};
+
 	return (
 		<Wrapper {...props}>
-			<StyledButton className='' onClick={() => (is_login ? reset_user_info() : set_should_open(true))}>
+			<StyledButton className='login' onClick={() => (is_login ? log_out() : set_should_open(true))}>
 				{is_login ? (
 					<>
-						LogOut
+						Logout
 						<img src={airplanemode_inactive} alt='login' />
 					</>
 				) : (
@@ -33,7 +40,6 @@ export const Login: FunctionComponent<Props> = (props) => {
 					</>
 				)}
 			</StyledButton>
-
 			{is_login ? '' : <LoginModal should_open={should_open} set_should_open={set_should_open} />}
 		</Wrapper>
 	);
