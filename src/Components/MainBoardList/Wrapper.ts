@@ -6,7 +6,7 @@ interface Props {
 
 export const Wrapper = styled.div<Props>`
 	cursor: pointer;
-	padding: 5%;
+	padding: 13px;
 	height: ${(props) => props.height}%;
 	white-space: nowrap;
 	text-overflow: ellipsis;

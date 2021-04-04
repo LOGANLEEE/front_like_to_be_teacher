@@ -1,15 +1,17 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, MouseEventHandler } from 'react';
 import { Wrapper } from './Wrapper';
-
+import { ListData } from 'Containers/Center';
 interface Props {
 	className?: string;
-	title: string;
+	data: ListData;
 	height: number;
+	onClick?: MouseEventHandler<HTMLDivElement>;
 }
 
 // TODO clicked list change colour for user
-export const MainBoardList: FunctionComponent<Props> = ({ className, title, height }) => (
-	<Wrapper height={height} className={className}>
-		{title}
+export const MainBoardList: FunctionComponent<Props> = ({ className, onClick, data, height }) => (
+	
+	<Wrapper height={height} className={className} onClick={onClick}>
+		{data?.title}
 	</Wrapper>
 );
