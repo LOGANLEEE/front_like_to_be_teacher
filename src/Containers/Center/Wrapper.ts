@@ -15,13 +15,18 @@ export const Wrapper = styled.div`
 		display: flex;
 		flex-direction: row;
 		flex-wrap: wrap;
-		gap: 10px;
+		gap: 20px;
 		height: 95%;
 		justify-content: center;
 
-		.item {
+		.main_board {
 			width: calc(95% / 2);
 			height: 100%;
+		}
+
+		.board {
+			height: 100%;
+			width: 100%;
 		}
 	}
 `;
